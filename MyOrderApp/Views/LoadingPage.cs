@@ -8,19 +8,23 @@ public partial class LoadingPage : BasePage<LoadingPageViewModel>
 
     public override void Build()
     {
-        Content = new StackLayout()
-            .Center()
-            .Children(
-                new ActivityIndicator()
-                    .IsRunning(true)
-                    .HeightRequest(70)
-                    .WidthRequest(70)
-                    .Center()
-                    .InvokeOnElement(ai => ai.Loaded += (sender, e) =>
-                    {
-                        CheckLogin();
-                    })
-                );
+        this
+            .BackgroundImageSource("background.jpg")
+            .Content(
+                new StackLayout()
+                .Center()
+                .Children(
+                    new ActivityIndicator()
+                        .IsRunning(true)
+                        .HeightRequest(70)
+                        .WidthRequest(70)
+                        .Center()
+                        .InvokeOnElement(ai => ai.Loaded += (sender, e) =>
+                        {
+                            CheckLogin();
+                        })
+                    )
+            );
     }
 
     private async void CheckLogin()

@@ -12,6 +12,7 @@ global using MyOrderApp.ViewModels;
 global using MyOrderApp.Views;
 global using MyOrderApp.Models;
 global using MyOrderApp.Repository;
+global using MyOrderApp.Converters;
 // Static
 global using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 global using static Microsoft.Maui.Graphics.Colors;

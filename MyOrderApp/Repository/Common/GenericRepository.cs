@@ -65,6 +65,9 @@ public class GenericRepository<TModel> : IGenericRepository<TModel> where TModel
 
     public bool Add(TModel model)
     {
+        model.CreatedDate = DateTime.Now;
+        model.UpdatedDate = DateTime.Now;
+        model.IsActive = true;
         var result = Table.Insert(model);
         Save();
 
@@ -73,6 +76,7 @@ public class GenericRepository<TModel> : IGenericRepository<TModel> where TModel
 
     public bool Update(TModel model)
     {
+        model.UpdatedDate = DateTime.Now;
         var result = Table.Update(model);
         Save();
 

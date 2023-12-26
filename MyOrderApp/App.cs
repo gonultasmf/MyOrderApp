@@ -6,7 +6,8 @@ public partial class App : Application
 
     public App(IServiceProvider services)
     {
-        MainPage = new AppShell(services)
-                        .ShellNavBarIsVisible(false);
+        this
+            .Resources(AppStyles.Default)
+            .MainPage(services.GetService<AppShell>());
     }
 }
