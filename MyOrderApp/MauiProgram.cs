@@ -28,6 +28,9 @@ public static partial class MauiProgram
         builder.Services.AddScopedWithShellRoute<LoginPage, LoginPageViewModel>($"//{nameof(LoginPage)}");
         builder.Services.AddScopedWithShellRoute<HomePage, HomePageViewModel>($"//{nameof(HomePage)}");
         builder.Services.AddScopedWithShellRoute<RegisterPage, RegisterPageViewModel>($"//{nameof(RegisterPage)}");
+        builder.Services.AddScopedWithShellRoute<CategoriesPage, CategoriesPageViewModel>($"//{nameof(CategoriesPage)}");
+        builder.Services.AddScopedWithShellRoute<FavoritesPage, FavoritesPageViewModel>($"//{nameof(FavoritesPage)}");
+        builder.Services.AddScopedWithShellRoute<BasketPage, BasketPageViewModel>($"//{nameof(BasketPage)}");
 
         return builder.Build();
     }

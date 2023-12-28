@@ -1,8 +1,8 @@
 ﻿namespace MyOrderApp.Views;
 
-public partial class HomePage : BasePage<HomePageViewModel>
+public partial class BasketPage : BasePage<BasketPageViewModel>
 {
-    public HomePage(HomePageViewModel viewModel) : base(viewModel, "Home Page")
+    public BasketPage(BasketPageViewModel viewModel) : base(viewModel, "Sepet")
     {
     }
 
@@ -12,7 +12,7 @@ public partial class HomePage : BasePage<HomePageViewModel>
             .Content(
                 new VerticalStackLayout()
                     .Children(new Label()
-                        .Text("Home Page"))
+                        .Text("Basket Page"))
                     .Center()
             );
     }

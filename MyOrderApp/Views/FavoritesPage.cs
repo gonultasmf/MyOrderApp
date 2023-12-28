@@ -1,8 +1,8 @@
 ﻿namespace MyOrderApp.Views;
 
-public partial class HomePage : BasePage<HomePageViewModel>
+public partial class FavoritesPage : BasePage<FavoritesPageViewModel>
 {
-    public HomePage(HomePageViewModel viewModel) : base(viewModel, "Home Page")
+    public FavoritesPage(FavoritesPageViewModel viewModel) : base(viewModel, "Favoriler")
     {
     }
 
@@ -12,7 +12,7 @@ public partial class HomePage : BasePage<HomePageViewModel>
             .Content(
                 new VerticalStackLayout()
                     .Children(new Label()
-                        .Text("Home Page"))
+                        .Text("Favorites Page"))
                     .Center()
             );
     }
