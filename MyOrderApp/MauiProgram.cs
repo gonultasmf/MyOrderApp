@@ -21,7 +21,12 @@ public static partial class MauiProgram
         builder.Services.AddSingleton<App>();
         builder.Services.AddSingleton<AppShell>();
 
+        builder.Services.AddAutoMapper(typeof(App));
+
         builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+        builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 
 
         builder.Services.AddScopedWithShellRoute<LoadingPage, LoadingPageViewModel>($"//{nameof(LoadingPage)}");
