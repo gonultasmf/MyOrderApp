@@ -32,6 +32,16 @@ public partial class HomePageViewModel : BaseViewModel
 
     });
 
+    public ICommand GotoAllCategoriesCommand => new Command(async () =>
+    {
+        await Shell.Current.GoToAsync($"//{nameof(CategoriesPage)}");
+    });
+
+    public ICommand AddProductBasketCommand => new Command((object parameter) =>
+    {
+
+    });
+
 
     public ICommand ChangeFavoriteCommand => new Command((object parameter) =>
     {

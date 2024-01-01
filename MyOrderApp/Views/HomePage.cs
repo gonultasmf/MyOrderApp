@@ -1,4 +1,6 @@
-﻿namespace MyOrderApp.Views;
+﻿using Microsoft.Maui.Layouts;
+
+namespace MyOrderApp.Views;
 
 public partial class HomePage : BasePage<HomePageViewModel>
 {
@@ -113,7 +115,7 @@ public partial class HomePage : BasePage<HomePageViewModel>
                     .BorderColor(Colors.LightGray)
                     .BackgroundColor(Colors.LightGray)
                     .MinimumHeightRequest(200)
-                    .MaximumWidthRequest(175)
+                    .MaximumWidthRequest(200)
                     .Padding(5)
                     .Content(
                         new Grid()
@@ -176,12 +178,110 @@ public partial class HomePage : BasePage<HomePageViewModel>
                                     .Bind(Label.TextDecorationsProperty, nameof(ProductVM.IsDiscount), converter: new BoolToTextDecorationConverter())
                                     .Bind(Label.FontSizeProperty, nameof(ProductVM.IsDiscount), converter: new BoolToFontSizeConverter())
                                     .FontAttributes(FontAttributes.Bold)
+                                    .CenterVertically(),
+
+                                    new Label()
+                                    .TextColor(Colors.Red)
+                                    .FontAttributes(FontAttributes.Bold)
                                     .CenterVertically()
+                                    .Bind(Label.IsVisibleProperty, nameof(ProductVM.IsDiscount))
+                                    .Bind(Label.TextProperty, nameof(ProductVM.DiscountPrice)),
+
+                                    new Label()
+                                    .Text("/")
+                                    .FontSize(10)
+                                    .CenterVertically()
+                                    .TextColor(Colors.DarkSlateGray),
+
+                                    new Label()
+                                    .FontSize(10)
+                                    .CenterVertically()
+                                    .TextColor(Colors.DarkSlateGray)
+                                    .Bind(Label.TextProperty, nameof(ProductVM.Unit))
                                 )
-                            )
+                            ),
+
+                            new Button()
+                            .Row(3)
+                            .Margin(new Thickness(0,5,0,0))
+                            .Padding(0)
+                            .Text("Sepete Ekle")
+                            .BackgroundColor(Colors.Green)
+                            .FontSize(12)
+                            .FontAttributes(FontAttributes.Bold)
+                            .CenterHorizontally()
+                            .HeightRequest(35)
+                            .WidthRequest(100)
+                            .Command(BindingContext.AddProductBasketCommand)
+                            .Bind(Button.CommandParameterProperty, ".")
                         )
                     )
-                )
+                ),
+
+                new Grid()
+                .ColumnDefinitions(e => e.Star(7).Star(3))
+                .FillHorizontally()
+                .Padding(10)
+                .Children(
+                    new Label()
+                    .Text("Kategoriler")
+                    .FontAttributes(FontAttributes.Bold)
+                    .FontSize(18)
+                    .CenterVertically()
+                    .Column(0)
+                    .AlignStart(),
+
+
+                    new Label()
+                    .Text("Tümünü Gör")
+                    .FontSize(15)
+                    .CenterVertically()
+                    .Column(1)
+                    .AlignEnd()
+                    .TextDecorations(TextDecorations.Underline)
+                    .GestureRecognizers(
+                        new TapGestureRecognizer()
+                        .Command(BindingContext.GotoAllCategoriesCommand)
+                    )
+                ),
+
+                new FlexLayout()
+                .ItemsSource(BindingContext.Categories)
+                .Assign(out var flex)
+                .Wrap(FlexWrap.Wrap)
+                .FlexBasis(FlexBasis.Auto)
+                .ItemTemplate(new DataTemplate(() => 
+                    new Frame()
+                    .CornerRadius(15)
+                    .BorderColor(Colors.LightGray)
+                    .BackgroundColor(Colors.LightGray)
+                    .MinimumHeightRequest(30)
+                    .WidthRequest(180)
+                    .Padding(0)
+                    .Margin(new Thickness(1,0,5,5))
+                    .FlexBasis(FlexBasis.Auto)
+                    .Content(
+                        new Grid()
+                        .ColumnDefinitions(e => e.Star(3).Star(7))
+                        .Padding(5)
+                        .Children(
+                            new Image()
+                            .Bind(Image.SourceProperty, nameof(SubCategoryVM.Icon))
+                            .SizeRequest(30,30)
+                            .Column(0)
+                            .CenterVertically(),
+
+                            new Label()
+                            .Bind(Label.TextProperty, nameof(SubCategoryVM.Name))
+                            .TextColor(Colors.CornflowerBlue)
+                            .FontAttributes(FontAttributes.Bold)
+                            .FontSize(12)
+                            .Column(1)
+                            .FontAutoScalingEnabled(true)
+                            .CenterVertically()
+                        )
+                    )
+                ))
             )
             .FillHorizontally()
         );
