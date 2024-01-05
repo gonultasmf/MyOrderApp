@@ -21,6 +21,11 @@ public partial class AppShell : Shell
                     .Route(nameof(RegisterPage))
                     .Items(services.GetService<RegisterPage>()),
 
+                new FlyoutItem()
+                    .FlyoutItemIsVisible(false)
+                    .Route(nameof(ProductsPage))
+                    .Items(services.GetService<ProductsPage>()),
+
                 new TabBar()
                     .FlyoutItemIsVisible(false)
                     .Route(nameof(LoadingPage))

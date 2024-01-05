@@ -17,7 +17,10 @@ public partial class HomePage : BasePage<HomePageViewModel>
             .Children(
                 new SearchBar()
                 .Placeholder("Ürünlerde Ara.")
-                .Margin(10),
+                .Margin(10)
+                .Assign(out var search)
+                .SearchCommand(BindingContext.SearchCommand)
+                .Bind(SearchBar.SearchCommandParameterProperty, "Text", source: search),
 
                 new Frame()
                 .CornerRadius(15)

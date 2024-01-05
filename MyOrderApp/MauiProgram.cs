@@ -36,6 +36,7 @@ public static partial class MauiProgram
         builder.Services.AddScopedWithShellRoute<CategoriesPage, CategoriesPageViewModel>($"//{nameof(CategoriesPage)}");
         builder.Services.AddScopedWithShellRoute<FavoritesPage, FavoritesPageViewModel>($"//{nameof(FavoritesPage)}");
         builder.Services.AddScopedWithShellRoute<BasketPage, BasketPageViewModel>($"//{nameof(BasketPage)}");
+        builder.Services.AddScopedWithShellRoute<ProductsPage, ProductsPageViewModel>($"//{nameof(ProductsPage)}");
 
         return builder.Build();
     }

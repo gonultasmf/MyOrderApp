@@ -4,19 +4,17 @@ using System.Windows.Input;
 
 namespace MyOrderApp.ViewModels;
 
-public partial class HomePageViewModel : BaseViewModel
+public partial class ProductsPageViewModel : BaseViewModel
 {
     [ObservableProperty]
     private ObservableCollection<ProductVM> _products;
 
-    [ObservableProperty]
-    private ObservableCollection<SubCategoryVM> _categories;
 
     private readonly IProductRepository _productRepository;
     private readonly ISubCategoryRepository _subCategoryRepository;
     private readonly IMapper _mapper;
 
-    public HomePageViewModel(IProductRepository productRepository,
+    public ProductsPageViewModel(IProductRepository productRepository, 
         ISubCategoryRepository subCategoryRepository, 
         IMapper mapper)
     {
@@ -24,18 +22,17 @@ public partial class HomePageViewModel : BaseViewModel
         _subCategoryRepository = subCategoryRepository;
         _mapper = mapper;
 
-        GetHomePageInfos();
+        Products = _mapper.Map<ObservableCollection<ProductVM>>(mapProducts);
     }
 
-    public ICommand GotoAllProductsCommand => new Command(async () =>
+
+
+    public ICommand SearchCommand => new Command((object val) =>
     {
-        await Shell.Current.GoToAsync($"//{nameof(ProductsPage)}");
+        var result = mapProducts.Where(x => val != null ? x.Name.Contains(val?.ToString()) : true);
+        Products = _mapper.Map<ObservableCollection<ProductVM>>(result);
     });
 
-    public ICommand GotoAllCategoriesCommand => new Command(async () =>
-    {
-        await Shell.Current.GoToAsync($"//{nameof(CategoriesPage)}");
-    });
 
     public ICommand AddProductBasketCommand => new Command((object parameter) =>
     {
@@ -51,21 +48,7 @@ public partial class HomePageViewModel : BaseViewModel
         Products[index] = product;
     });
 
-
-    public ICommand SearchCommand => new Command(async (object val) =>
-    {
-        ProductsPage.Filter = (string)val;
-        await Shell.Current.GoToAsync($"//{nameof(ProductsPage)}");
-    });
-
-
-    private void GetHomePageInfos()
-    {
-        Products = _mapper.Map<ObservableCollection<ProductVM>>(mapProducts.Take(5));
-        Categories = _mapper.Map<ObservableCollection<SubCategoryVM>>(categories);
-    }
-
-    public static List<Product> mapProducts = new List<Product>()
+    public List<Product> mapProducts = new List<Product>()
         {
             new Product
             {
@@ -108,74 +91,132 @@ public partial class HomePageViewModel : BaseViewModel
                 Unit = "1 Adet",
                 UpdatedDate = DateTime.Now,
                 ImageId = ""
+            },
+            new Product
+            {
+                CreatedDate = DateTime.Now,
+                Description = "",
+                DiscountRate = 10,
+                IsActive = true,
+                IsDiscount = false,
+                IsFavorite = true,
+                Name = "Fenerbahçe Forması",
+                Price = 250,
+                Unit = "1 Adet",
+                UpdatedDate = DateTime.Now,
+                ImageId = ""
+            },
+            new Product
+            {
+                CreatedDate = DateTime.Now,
+                Description = "",
+                DiscountRate = 50,
+                IsActive = true,
+                IsDiscount = true,
+                IsFavorite = false,
+                Name = "Galatasaray Forması",
+                Price = 250,
+                Unit = "1 Adet",
+                UpdatedDate = DateTime.Now,
+                ImageId = ""
+            },
+            new Product
+            {
+                CreatedDate = DateTime.Now,
+                Description = "",
+                DiscountRate = 40,
+                IsActive = true,
+                IsDiscount = true,
+                IsFavorite = false,
+                Name = "Beşiktaş Forması",
+                Price = 250,
+                Unit = "1 Adet",
+                UpdatedDate = DateTime.Now,
+                ImageId = ""
+            },
+            new Product
+            {
+                CreatedDate = DateTime.Now,
+                Description = "",
+                DiscountRate = 10,
+                IsActive = true,
+                IsDiscount = false,
+                IsFavorite = true,
+                Name = "Fenerbahçe Forması",
+                Price = 250,
+                Unit = "1 Adet",
+                UpdatedDate = DateTime.Now,
+                ImageId = ""
+            },
+            new Product
+            {
+                CreatedDate = DateTime.Now,
+                Description = "",
+                DiscountRate = 50,
+                IsActive = true,
+                IsDiscount = true,
+                IsFavorite = false,
+                Name = "Galatasaray Forması",
+                Price = 250,
+                Unit = "1 Adet",
+                UpdatedDate = DateTime.Now,
+                ImageId = ""
+            },
+            new Product
+            {
+                CreatedDate = DateTime.Now,
+                Description = "",
+                DiscountRate = 40,
+                IsActive = true,
+                IsDiscount = true,
+                IsFavorite = false,
+                Name = "Beşiktaş Forması",
+                Price = 250,
+                Unit = "1 Adet",
+                UpdatedDate = DateTime.Now,
+                ImageId = ""
+            },
+            new Product
+            {
+                CreatedDate = DateTime.Now,
+                Description = "",
+                DiscountRate = 10,
+                IsActive = true,
+                IsDiscount = false,
+                IsFavorite = true,
+                Name = "Fenerbahçe Forması",
+                Price = 250,
+                Unit = "1 Adet",
+                UpdatedDate = DateTime.Now,
+                ImageId = ""
+            },
+            new Product
+            {
+                CreatedDate = DateTime.Now,
+                Description = "",
+                DiscountRate = 50,
+                IsActive = true,
+                IsDiscount = true,
+                IsFavorite = false,
+                Name = "Galatasaray Forması",
+                Price = 250,
+                Unit = "1 Adet",
+                UpdatedDate = DateTime.Now,
+                ImageId = ""
+            },
+            new Product
+            {
+                CreatedDate = DateTime.Now,
+                Description = "",
+                DiscountRate = 40,
+                IsActive = true,
+                IsDiscount = true,
+                IsFavorite = false,
+                Name = "Beşiktaş Forması",
+                Price = 250,
+                Unit = "1 Adet",
+                UpdatedDate = DateTime.Now,
+                ImageId = ""
             }
-        };
-
-    public static List<SubCategory> categories = new List<SubCategory>()
-        {
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Yeniler",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Unlu Mamülleri",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Meyveler",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Meat",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Balıklar",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Kafeler",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Soda",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Çörekler",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
         };
 }
