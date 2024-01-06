@@ -59,6 +59,7 @@
         <None Remove="Resources\Images\background.jpg" />
         <None Remove="Resources\Images\basket.png" />
         <None Remove="Resources\Images\categories.png" />
+        <None Remove="Resources\Images\chevron.png" />
         <None Remove="Resources\Images\favorite.png" />
         <None Remove="Resources\Images\favorites.png" />
         <None Remove="Resources\Images\home.png" />
