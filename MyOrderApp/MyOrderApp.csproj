@@ -64,6 +64,7 @@
         <None Remove="Resources\Images\favorites.png" />
         <None Remove="Resources\Images\home.png" />
         <None Remove="Resources\Images\not_favorite.png" />
+        <None Remove="Resources\Images\remove.png" />
         <None Remove="Resources\Images\white_bread.png" />
     </ItemGroup>
 

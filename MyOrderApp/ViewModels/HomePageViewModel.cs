@@ -37,9 +37,12 @@ public partial class HomePageViewModel : BaseViewModel
         await Shell.Current.GoToAsync($"//{nameof(CategoriesPage)}");
     });
 
-    public ICommand AddProductBasketCommand => new Command((object parameter) =>
+    public ICommand AddProductBasketCommand => new Command<ProductVM>((parameter) =>
     {
-
+        if (BasketPageViewModel.BasketProduct.Any(x => x.Product.Id == parameter.Id))
+            BasketPageViewModel.BasketProduct.First(x => x.Product.Id == parameter.Id).Count++;
+        else
+            BasketPageViewModel.BasketProduct.Add(new BasketProductVM { Count = 1, Product = parameter });
     });
 
 
@@ -69,6 +72,7 @@ public partial class HomePageViewModel : BaseViewModel
         {
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 10,
@@ -83,6 +87,7 @@ public partial class HomePageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 50,
@@ -97,6 +102,7 @@ public partial class HomePageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 40,

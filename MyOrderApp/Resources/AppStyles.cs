@@ -42,9 +42,6 @@ public class AppStyles
             .MinimumHeightRequest(44)
             .MinimumWidthRequest(44))
         {
-            new VisualState<Button> (VisualStates.VisualElement.Normal, e => e
-                .TextColor(e => e.OnLight(Colors.White).OnDark(AppColors.Primary))),
-
             new VisualState<Button> (VisualStates.VisualElement.Disabled, e => e
                 .TextColor(e => e.OnLight(AppColors.Gray950).OnDark(AppColors.Gray200))
                 .BackgroundColor(e => e.OnLight(AppColors.Gray200).OnDark(AppColors.Gray600)))

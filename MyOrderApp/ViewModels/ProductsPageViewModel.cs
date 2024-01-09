@@ -34,9 +34,12 @@ public partial class ProductsPageViewModel : BaseViewModel
     });
 
 
-    public ICommand AddProductBasketCommand => new Command((object parameter) =>
+    public ICommand AddProductBasketCommand => new Command<ProductVM>((parameter) =>
     {
-
+        if (BasketPageViewModel.BasketProduct.Any(x => x.Product.Id == parameter.Id))
+            BasketPageViewModel.BasketProduct.First(x => x.Product.Id == parameter.Id).Count++;
+        else
+            BasketPageViewModel.BasketProduct.Add(new BasketProductVM { Count = 1, Product = parameter });
     });
 
 
@@ -52,6 +55,7 @@ public partial class ProductsPageViewModel : BaseViewModel
         {
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 10,
@@ -66,6 +70,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 50,
@@ -80,6 +85,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 40,
@@ -94,6 +100,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 10,
@@ -108,6 +115,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 50,
@@ -122,6 +130,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 40,
@@ -136,6 +145,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 10,
@@ -150,6 +160,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 50,
@@ -164,6 +175,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 40,
@@ -178,6 +190,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 10,
@@ -192,6 +205,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 50,
@@ -206,6 +220,7 @@ public partial class ProductsPageViewModel : BaseViewModel
             },
             new Product
             {
+                Id = Guid.NewGuid(),
                 CreatedDate = DateTime.Now,
                 Description = "",
                 DiscountRate = 40,
