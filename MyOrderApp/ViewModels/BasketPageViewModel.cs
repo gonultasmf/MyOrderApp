@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Core.Extensions;
+using MyOrderApp.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -47,6 +48,15 @@ public partial class BasketPageViewModel : BaseViewModel
         BasketProducts.RemoveAt(index);
         BasketProduct.RemoveAt(index);
         Calculate();
+    });
+
+    public ICommand CompletedCommand => new Command(async () =>
+    {
+        BasketProducts.Clear();
+        BasketProduct.Clear();
+        Calculate();
+        await Shell.Current.ShowPopupAsync(new MyPopup());
+        await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
     });
 
     private void Calculate()

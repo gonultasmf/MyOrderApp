@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace MyOrderApp;
 
@@ -9,6 +10,7 @@ public static partial class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>()
                .UseMauiCommunityToolkit()
+               .UseSkiaSharp()
                .ConfigureFonts(fonts =>
                {
                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

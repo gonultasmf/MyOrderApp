@@ -206,6 +206,7 @@ public partial class BasketPage : BasePage<BasketPageViewModel>
                         .ColumnSpan(2)
                         .Column(0)
                         .Row(3)
+                        .Command(BindingContext.CompletedCommand)
                     )
                 )
             );

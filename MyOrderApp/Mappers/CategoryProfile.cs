@@ -13,5 +13,7 @@ public class CategoryProfile : Profile
     {
         CreateMap<SubCategory, SubCategoryVM>()
             .ForMember(dist => dist.Icon, opt => opt.MapFrom(src => "dotnet_bot.svg"));
+
+        CreateMap<Category, CategoryVM>();
     }
 }

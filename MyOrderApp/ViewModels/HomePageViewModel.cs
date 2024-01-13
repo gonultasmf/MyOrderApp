@@ -52,6 +52,10 @@ public partial class HomePageViewModel : BaseViewModel
         var index = Products.IndexOf(product);
         product.IsFavorite = !product.IsFavorite;
         Products[index] = product;
+
+        var p = _productRepository.Get(product.Id);
+        p.IsFavorite = product.IsFavorite;
+        _productRepository.Update(p);
     });
 
 
@@ -64,124 +68,16 @@ public partial class HomePageViewModel : BaseViewModel
 
     private void GetHomePageInfos()
     {
-        Products = _mapper.Map<ObservableCollection<ProductVM>>(mapProducts.Take(5));
-        Categories = _mapper.Map<ObservableCollection<SubCategoryVM>>(categories);
+        var p = _productRepository
+                    .GetAll()
+                    .OrderByDescending(x => x.CreatedDate)
+                    .Take(5);
+
+        var c = _subCategoryRepository.GetAll()
+                    .OrderByDescending(x => x.CreatedDate)
+                    .Take(8);
+
+        Products = _mapper.Map<ObservableCollection<ProductVM>>(p);
+        Categories = _mapper.Map<ObservableCollection<SubCategoryVM>>(c);
     }
-
-    public static List<Product> mapProducts = new List<Product>()
-        {
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 10,
-                IsActive = true,
-                IsDiscount = false,
-                IsFavorite = true,
-                Name = "Fenerbahçe Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 50,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Galatasaray Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 40,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Beşiktaş Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            }
-        };
-
-    public static List<SubCategory> categories = new List<SubCategory>()
-        {
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Yeniler",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Unlu Mamülleri",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Meyveler",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Meat",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Balıklar",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Kafeler",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Soda",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-            new SubCategory
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Çörekler",
-                UpdatedDate = DateTime.Now,
-                IconId = ""
-            },
-        };
 }

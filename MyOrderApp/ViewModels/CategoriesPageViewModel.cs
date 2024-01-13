@@ -21,151 +21,20 @@ public partial class CategoriesPageViewModel : BaseViewModel
         _subCategoryRepository = subCategoryRepository;
         _mapper = mapper;
 
-        Categories = categories.ToObservableCollection();
+        GetInfo();
     }
 
+    private void GetInfo()
+    {
+        var categories = _categoryRepository.GetAll(x => x.IsActive);
+        var result = _mapper.Map<ObservableCollection<CategoryVM>>(categories);
 
-    public List<CategoryVM> categories = new List<CategoryVM>()
+        foreach (var item in result)
         {
-            new CategoryVM
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Başlık 1",
-                UpdatedDate = DateTime.Now,
-                SubCategories = new List<SubCategoryVM>
-                {
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Yeniler",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Unlu Mamülleri",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Meyveler",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                }
-            },
+            var sc = _subCategoryRepository.GetAll(x => x.IsActive && x.CategoryId == item.Id);
+            item.SubCategories = _mapper.Map<List<SubCategoryVM>>(sc);
+        }
 
-            new CategoryVM
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Meat",
-                UpdatedDate = DateTime.Now,
-                SubCategories = new List<SubCategoryVM>
-                {
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Balıklar",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Kafeler",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Soda",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                }
-            },
-
-            new CategoryVM
-            {
-                CreatedDate = DateTime.Now,
-                IsActive = true,
-                Name = "Tümü",
-                UpdatedDate = DateTime.Now,
-                SubCategories = new List<SubCategoryVM>
-                {
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Yeniler",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Unlu Mamülleri",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Meyveler",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Balıklar",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Kafeler",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                    new SubCategoryVM
-                    {
-                        CreatedDate = DateTime.Now,
-                        IsActive = true,
-                        Name = "Soda",
-                        UpdatedDate = DateTime.Now,
-                        IconId = "",
-                        Icon = "dotnet_bot.svg"
-                    },
-                }
-            },
-        };
+        Categories = result;
+    }
 }

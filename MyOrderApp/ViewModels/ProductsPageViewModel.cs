@@ -22,15 +22,18 @@ public partial class ProductsPageViewModel : BaseViewModel
         _subCategoryRepository = subCategoryRepository;
         _mapper = mapper;
 
-        Products = _mapper.Map<ObservableCollection<ProductVM>>(mapProducts);
+        GetInfo();
     }
 
 
 
-    public ICommand SearchCommand => new Command((object val) =>
+    public ICommand SearchCommand => new Command<string>((val) =>
     {
-        var result = mapProducts.Where(x => val != null ? x.Name.Contains(val?.ToString()) : true);
-        Products = _mapper.Map<ObservableCollection<ProductVM>>(result);
+        var p = _productRepository
+                    .GetAll(x => x.Name.Contains(val))
+                    .OrderByDescending(x => x.CreatedDate);
+
+        Products = _mapper.Map<ObservableCollection<ProductVM>>(p);
     });
 
 
@@ -49,189 +52,19 @@ public partial class ProductsPageViewModel : BaseViewModel
         var index = Products.IndexOf(product);
         product.IsFavorite = !product.IsFavorite;
         Products[index] = product;
+
+        var p = _productRepository.Get(product.Id);
+        p.IsFavorite = product.IsFavorite;
+        _productRepository.Update(p);
     });
 
-    public List<Product> mapProducts = new List<Product>()
-        {
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 10,
-                IsActive = true,
-                IsDiscount = false,
-                IsFavorite = true,
-                Name = "Fenerbahçe Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 50,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Galatasaray Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 40,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Beşiktaş Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 10,
-                IsActive = true,
-                IsDiscount = false,
-                IsFavorite = true,
-                Name = "Fenerbahçe Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 50,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Galatasaray Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 40,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Beşiktaş Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 10,
-                IsActive = true,
-                IsDiscount = false,
-                IsFavorite = true,
-                Name = "Fenerbahçe Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 50,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Galatasaray Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 40,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Beşiktaş Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 10,
-                IsActive = true,
-                IsDiscount = false,
-                IsFavorite = true,
-                Name = "Fenerbahçe Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 50,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Galatasaray Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            },
-            new Product
-            {
-                Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now,
-                Description = "",
-                DiscountRate = 40,
-                IsActive = true,
-                IsDiscount = true,
-                IsFavorite = false,
-                Name = "Beşiktaş Forması",
-                Price = 250,
-                Unit = "1 Adet",
-                UpdatedDate = DateTime.Now,
-                ImageId = ""
-            }
-        };
+
+    private void GetInfo()
+    {
+        var p = _productRepository
+                    .GetAll()
+                    .OrderByDescending(x => x.CreatedDate);
+
+        Products = _mapper.Map<ObservableCollection<ProductVM>>(p);
+    }
 }

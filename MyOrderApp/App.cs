@@ -9,5 +9,7 @@ public partial class App : Application
         this
             .Resources(AppStyles.Default)
             .MainPage(services.GetService<AppShell>());
+
+        TemplateData template = new TemplateData();
     }
 }

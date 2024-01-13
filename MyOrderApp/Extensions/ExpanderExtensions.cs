@@ -1,4 +1,6 @@
-﻿namespace MyOrderApp.Extensions;
+﻿using SkiaSharp.Extended.UI.Controls;
+
+namespace MyOrderApp.Extensions;
 
 public static class ExpanderExtensions
 {
@@ -19,6 +21,20 @@ public static class ExpanderExtensions
     public static T IsExpanded<T>(this T item, bool isExpanded) where T : Expander
     {
         item.SetValue(Expander.IsExpandedProperty, isExpanded);
+
+        return item;
+    }
+
+    public static T SKSource<T>(this T item, object source) where T : SKLottieView
+    {
+        item.SetValue(SKLottieView.SourceProperty, source);
+
+        return item;
+    }
+
+    public static T RepeatCount<T>(this T item, int count) where T : SKLottieView
+    {
+        item.SetValue(SKLottieView.RepeatCountProperty, count);
 
         return item;
     }

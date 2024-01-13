@@ -51,6 +51,8 @@ public partial class CategoriesPage : BasePage<CategoriesPageViewModel>
                                 .Children(
                                     new Label()
                                     .Bind(Label.TextProperty, nameof(CategoryVM.Name))
+                                    .FontSize(18)
+                                    .FontAttributes(FontAttributes.Bold)
                                     .Column(0),
 
                                     new Image()

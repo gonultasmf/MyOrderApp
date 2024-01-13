@@ -64,8 +64,10 @@
         <None Remove="Resources\Images\favorites.png" />
         <None Remove="Resources\Images\home.png" />
         <None Remove="Resources\Images\not_favorite.png" />
+        <None Remove="Resources\Images\products.png" />
         <None Remove="Resources\Images\remove.png" />
         <None Remove="Resources\Images\white_bread.png" />
+        <None Remove="Resources\Raw\completed.json" />
     </ItemGroup>
 
     <ItemGroup>
@@ -79,5 +81,6 @@
         <PackageReference Include="CommunityToolkit.Maui" Version="7.*" />
         <PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.*" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
+        <PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.86" />
     </ItemGroup>
 </Project>

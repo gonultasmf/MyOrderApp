@@ -21,11 +21,6 @@ public partial class AppShell : Shell
                     .Route(nameof(RegisterPage))
                     .Items(services.GetService<RegisterPage>()),
 
-                new FlyoutItem()
-                    .FlyoutItemIsVisible(false)
-                    .Route(nameof(ProductsPage))
-                    .Items(services.GetService<ProductsPage>()),
-
                 new TabBar()
                     .FlyoutItemIsVisible(false)
                     .Route(nameof(LoadingPage))
@@ -37,6 +32,14 @@ public partial class AppShell : Shell
                             .Title("Anasayfa")
                             .Icon("home.png")
                             .Items(services.GetService<HomePage>()),
+
+                        new Tab()
+                            .FlyoutDisplayOptions(FlyoutDisplayOptions.AsSingleItem)
+                            .FlyoutItemIsVisible(true)
+                            .Route(nameof(ProductsPage))
+                            .Title("Ürünler")
+                            .Icon("products.png")
+                            .Items(services.GetService<ProductsPage>()),
 
                         new Tab()
                             .FlyoutDisplayOptions(FlyoutDisplayOptions.AsSingleItem)
