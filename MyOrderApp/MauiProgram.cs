@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using SkiaSharp.Extended.UI.Controls;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace MyOrderApp;
 
+[MauiMarkup(typeof(Expander), typeof(SKLottieView))]
 public static partial class MauiProgram
 {
     public static MauiApp CreateMauiApp()

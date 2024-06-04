@@ -14,11 +14,12 @@ public partial class CategoriesPage : BasePage<CategoriesPageViewModel>
         .Content(
             new VerticalStackLayout()
             .Margin(10)
-            .FillHorizontally()
+            .FillHorizontal()
             .Children(
                 new CollectionView()
                 .SelectionMode(SelectionMode.None)
-                .Bind(CollectionView.ItemsSourceProperty, "Categories")
+                .ItemsSource(e => e.Path("Categories"))
+                //.Bind(CollectionView.ItemsSourceProperty, "Categories")
                 .ItemsLayout(
                     new LinearItemsLayout(ItemsLayoutOrientation.Vertical)
                     .ItemSpacing(10)
@@ -50,7 +51,8 @@ public partial class CategoriesPage : BasePage<CategoriesPageViewModel>
                                 .Margin(5)
                                 .Children(
                                     new Label()
-                                    .Bind(Label.TextProperty, nameof(CategoryVM.Name))
+                                    .Text(e => e.Path(nameof(CategoryVM.Name)))
+                                    //.Bind(Label.TextProperty, nameof(CategoryVM.Name))
                                     .FontSize(18)
                                     .FontAttributes(FontAttributes.Bold)
                                     .Column(0),
@@ -75,10 +77,11 @@ public partial class CategoriesPage : BasePage<CategoriesPageViewModel>
                                 )
                             )
                         )
-                        .Contents(
+                        .Content(
                             new CollectionView()
                             .SelectionMode(SelectionMode.None)
-                            .Bind(CollectionView.ItemsSourceProperty, nameof(CategoryVM.SubCategories))
+                            .ItemsSource(e => e.Path(nameof(CategoryVM.SubCategories)))
+                            //.Bind(CollectionView.ItemsSourceProperty, nameof(CategoryVM.SubCategories))
                             .ItemsLayout(
                                 new GridItemsLayout(ItemsLayoutOrientation.Vertical)
                                 .Span(2)
@@ -112,19 +115,21 @@ public partial class CategoriesPage : BasePage<CategoriesPageViewModel>
                                             .Padding(5)
                                             .Children(
                                                 new Image()
-                                                .Bind(Image.SourceProperty, nameof(SubCategoryVM.Icon))
+                                                .Source(e => e.Path(nameof(SubCategoryVM.Icon)))
+                                                //.Bind(Image.SourceProperty, nameof(SubCategoryVM.Icon))
                                                 .SizeRequest(30, 30)
                                                 .Column(0)
-                                                .CenterVertically(),
+                                                .CenterVertical(),
 
                                                 new Label()
-                                                .Bind(Label.TextProperty, nameof(SubCategoryVM.Name))
+                                                .Text(e => e.Path(nameof(SubCategoryVM.Name)))
+                                                //.Bind(Label.TextProperty, nameof(SubCategoryVM.Name))
                                                 .TextColor(Colors.CornflowerBlue)
                                                 .FontAttributes(FontAttributes.Bold)
                                                 .FontSize(12)
                                                 .Column(1)
                                                 .FontAutoScalingEnabled(true)
-                                                .CenterVertically()
+                                                .CenterVertical()
                                             )
                                         )
                             )

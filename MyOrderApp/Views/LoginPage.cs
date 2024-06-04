@@ -22,7 +22,8 @@ public partial class LoginPage : BasePage<LoginPageViewModel>
                             .PlaceholderColor(Colors.Gray)
                             .TextColor(Colors.White)
                             .Assign(out Entry username)
-                            .Bind(Entry.TextProperty, "User.Username"),
+                            .Text(e => e.Path("User.Username"))
+                            /*.Bind(Entry.TextProperty, "User.Username")*/,
 
                             new Entry()
                             .Placeholder("Şifre Girin.")
@@ -30,26 +31,29 @@ public partial class LoginPage : BasePage<LoginPageViewModel>
                             .TextColor(Colors.White)
                             .IsPassword(true)
                             .Assign(out Entry password)
-                            .Bind(Entry.TextProperty, "User.Password"),
+                            .Text(e => e.Path("User.Password"))
+                            /*.Bind(Entry.TextProperty, "User.Password")*/,
 
                             new HorizontalStackLayout() 
                             .Children(
                                 new CheckBox()
                                 .Color(Colors.White)
-                                .CenterVertically()
-                                .Bind(CheckBox.IsCheckedProperty, "IsControl"),
+                                .CenterVertical()
+                                .IsChecked(e => e.Path("IsControl"))
+                                /*.Bind(CheckBox.IsCheckedProperty, "IsControl")*/,
 
                                 new Label()
                                 .Text("Beni Hatırla")
                                 .TextColor(Colors.White)
-                                .CenterVertically()
+                                .CenterVertical()
                             ),
                         
                             new Button()
                             .Text("GİRİŞ YAP")
                             .FontAttributes(FontAttributes.Bold)
                             .IsEnabled(false)
-                            .Bind(Button.CommandProperty, "LoginCommand")
+                            .Command(e => e.Path("LoginCommand"))
+                            //.Bind(Button.CommandProperty, "LoginCommand")
                             .Triggers(
                                 new MultiTrigger(typeof(Button))
                                 .Conditions(
@@ -97,7 +101,7 @@ public partial class LoginPage : BasePage<LoginPageViewModel>
                             new Label()
                             .Text("Hesabım Yok! Kayıt Ol.")
                             .TextColor(Colors.LightGray)
-                            .CenterHorizontally()
+                            .CenterHorizontal()
                             .GestureRecognizers(
                                 new TapGestureRecognizer()
                                 .OnTapped(async (e, args) =>

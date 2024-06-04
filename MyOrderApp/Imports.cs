@@ -7,7 +7,7 @@ global using CommunityToolkit.Maui.Views;
 global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
 global using CommunityToolkit.Mvvm.Messaging;
-global using CodeMarkup.Maui;
+global using FmgLib.MauiMarkup;
 global using MyOrderApp;
 global using MyOrderApp.ViewModels;
 global using MyOrderApp.Views;

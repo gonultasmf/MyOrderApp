@@ -22,14 +22,14 @@ public partial class RegisterPage : BasePage<RegisterPageViewModel>
                             .PlaceholderColor(Colors.Gray)
                             .TextColor(Colors.White)
                             .Assign(out Entry fullname)
-                            .Bind(Entry.TextProperty, "User.FullName"),
+                            .Text(e => e.Path("User.FullName")),
 
                             new Entry()
                             .Placeholder("Kullanıcı Adı Girin.")
                             .PlaceholderColor(Colors.Gray)
                             .TextColor(Colors.White)
                             .Assign(out Entry username)
-                            .Bind(Entry.TextProperty, "User.Username"),
+                            .Text(e => e.Path("User.Username")),
 
                             new Entry()
                             .Placeholder("Şifre Girin.")
@@ -37,7 +37,7 @@ public partial class RegisterPage : BasePage<RegisterPageViewModel>
                             .TextColor(Colors.White)
                             .IsPassword(true)
                             .Assign(out Entry password)
-                            .Bind(Entry.TextProperty, "User.Password"),
+                            .Text(e => e.Path("User.Password")),
 
                             
 
@@ -45,7 +45,8 @@ public partial class RegisterPage : BasePage<RegisterPageViewModel>
                             .Text("KAYDET")
                             .FontAttributes(FontAttributes.Bold)
                             .IsEnabled(false)
-                            .Bind(Button.CommandProperty, "RegisterCommand")
+                            .Command(e => e.Path("RegisterCommand"))
+                            //.Bind(Button.CommandProperty, "RegisterCommand")
                             .Triggers(
                                 new MultiTrigger(typeof(Button))
                                 .Conditions(
@@ -93,7 +94,7 @@ public partial class RegisterPage : BasePage<RegisterPageViewModel>
                             new Label()
                             .Text("Hesabım Var! Giriş Yap.")
                             .TextColor(Colors.LightGray)
-                            .CenterHorizontally()
+                            .CenterHorizontal()
                             .GestureRecognizers(
                                 new TapGestureRecognizer()
                                 .OnTapped(async (e, args) =>

@@ -13,14 +13,15 @@ public partial class FavoritesPage : BasePage<FavoritesPageViewModel>
             new ScrollView()
             .Content(
                 new VerticalStackLayout()
-                .FillVertically()
+                .FillVertical()
                 .Children(
                     new SearchBar()
                     .Placeholder("Ürünlerde Ara.")
                     .Assign(out var search)
                     .Margin(10)
                     .SearchCommand(BindingContext.SearchCommand)
-                    .Bind(SearchBar.SearchCommandParameterProperty, "Text", source: search)
+                    .SearchCommandParameter(e => e.Path("Text").Source(search))
+                    //.Bind(SearchBar.SearchCommandParameterProperty, "Text", source: search)
                     .InvokeOnElement(s => s.TextChanged += (sender, e) =>
                     {
                         if (search.Text.Length == 0)
@@ -30,7 +31,8 @@ public partial class FavoritesPage : BasePage<FavoritesPageViewModel>
                     new CollectionView()
                     .SelectionMode(SelectionMode.None)
                     .Margin(10)
-                    .Bind(CollectionView.ItemsSourceProperty, "Products")
+                    .ItemsSource(e => e.Path("Products"))
+                    //.Bind(CollectionView.ItemsSourceProperty, "Products")
                     .ItemsLayout(
                             new GridItemsLayout(ItemsLayoutOrientation.Vertical)
                             .Span(2)
@@ -67,12 +69,14 @@ public partial class FavoritesPage : BasePage<FavoritesPageViewModel>
                                 .ColumnDefinitions(e => e.Star(6).Star(4))
                                 .Children(
                                     new ImageButton()
-                                    .Bind(ImageButton.SourceProperty, nameof(ProductVM.IsFavorite), converter: new BoolToFavoriteImageConverter())
+                                    .Source(e => e.Path(nameof(ProductVM.IsFavorite)).Converter(new BoolToFavoriteImageConverter()))
+                                    //.Bind(ImageButton.SourceProperty, nameof(ProductVM.IsFavorite), converter: new BoolToFavoriteImageConverter())
                                     .BackgroundColor(Colors.Transparent)
                                     .AlignStart()
                                     .SizeRequest(30, 30)
                                     .Command(BindingContext.ChangeFavoriteCommand)
-                                    .Bind(ImageButton.CommandParameterProperty, "."),
+                                    //.Bind(ImageButton.CommandParameterProperty, ".")
+                                    .CommandParameter(e => e.Path(".")),
 
                                     new Frame()
                                     .CornerRadius(20)
@@ -82,10 +86,12 @@ public partial class FavoritesPage : BasePage<FavoritesPageViewModel>
                                     .BackgroundColor(Colors.Red)
                                     .BorderColor(Colors.Red)
                                     .Column(1)
-                                    .Bind(Microsoft.Maui.Controls.Frame.IsVisibleProperty, nameof(ProductVM.IsDiscount))
+                                    .IsVisible(e => e.Path(nameof(ProductVM.IsDiscount)))
+                                    //.Bind(Microsoft.Maui.Controls.Frame.IsVisibleProperty, nameof(ProductVM.IsDiscount))
                                     .Content(
                                         new Label()
-                                        .Bind(Label.TextProperty, nameof(ProductVM.DiscountRate))
+                                        .Text(e => e.Path(nameof(ProductVM.DiscountRate)))
+                                        //.Bind(Label.TextProperty, nameof(ProductVM.DiscountRate))
                                         .FontSize(11)
                                         .FontAttributes(FontAttributes.Bold)
                                         .TextColor(Colors.White)
@@ -94,17 +100,19 @@ public partial class FavoritesPage : BasePage<FavoritesPageViewModel>
                                 ),
 
                                 new Image()
-                                .Bind(Image.SourceProperty, nameof(ProductVM.Image))
+                                .Source(e => e.Path(nameof(ProductVM.Image)))
+                                //.Bind(Image.SourceProperty, nameof(ProductVM.Image))
                                 .SizeRequest(100, 100)
                                 .Margin(0)
                                 .Row(1)
-                                .CenterHorizontally(),
+                                .CenterHorizontal(),
 
                                 new VerticalStackLayout()
                                 .Row(2)
                                 .Children(
                                     new Label()
-                                    .Bind(Label.TextProperty, nameof(ProductVM.Name))
+                                    .Text(e => e.Path(nameof(ProductVM.Name)))
+                                    //.Bind(Label.TextProperty, nameof(ProductVM.Name))
                                     .FontAttributes(FontAttributes.Bold)
                                     .FontSize(11)
                                     .AlignStart()
@@ -115,30 +123,36 @@ public partial class FavoritesPage : BasePage<FavoritesPageViewModel>
                                     .Spacing(2)
                                     .Children(
                                         new Label()
-                                        .Bind(Label.TextProperty, nameof(ProductVM.Price))
-                                        .Bind(Label.TextDecorationsProperty, nameof(ProductVM.IsDiscount), converter: new BoolToTextDecorationConverter())
-                                        .Bind(Label.FontSizeProperty, nameof(ProductVM.IsDiscount), converter: new BoolToFontSizeConverter())
+                                        .Text(e => e.Path(nameof(ProductVM.Price)))
+                                        .TextDecorations(e => e.Path(nameof(ProductVM.IsDiscount)).Converter(new BoolToTextDecorationConverter()))
+                                        .FontSize(e => e.Path(nameof(ProductVM.IsDiscount)).Converter(new BoolToFontSizeConverter()))
+                                        //.Bind(Label.TextProperty, nameof(ProductVM.Price))
+                                        //.Bind(Label.TextDecorationsProperty, nameof(ProductVM.IsDiscount), converter: new BoolToTextDecorationConverter())
+                                        //.Bind(Label.FontSizeProperty, nameof(ProductVM.IsDiscount), converter: new BoolToFontSizeConverter())
                                         .FontAttributes(FontAttributes.Bold)
-                                        .CenterVertically(),
+                                        .CenterVertical(),
 
                                         new Label()
                                         .TextColor(Colors.Red)
                                         .FontAttributes(FontAttributes.Bold)
-                                        .CenterVertically()
-                                        .Bind(Label.IsVisibleProperty, nameof(ProductVM.IsDiscount))
-                                        .Bind(Label.TextProperty, nameof(ProductVM.DiscountPrice)),
+                                        .CenterVertical()
+                                        .IsVisible(e => e.Path(nameof(ProductVM.IsDiscount)))
+                                        .Text(e => e.Path(nameof(ProductVM.DiscountPrice))),
+                                        //.Bind(Label.IsVisibleProperty, nameof(ProductVM.IsDiscount))
+                                        //.Bind(Label.TextProperty, nameof(ProductVM.DiscountPrice)),
 
                                         new Label()
                                         .Text("/")
                                         .FontSize(10)
-                                        .CenterVertically()
+                                        .CenterVertical()
                                         .TextColor(Colors.DarkSlateGray),
 
                                         new Label()
                                         .FontSize(10)
-                                        .CenterVertically()
+                                        .CenterVertical()
                                         .TextColor(Colors.DarkSlateGray)
-                                        .Bind(Label.TextProperty, nameof(ProductVM.Unit))
+                                        //.Bind(Label.TextProperty, nameof(ProductVM.Unit))
+                                        .Text(e => e.Path(nameof(ProductVM.Unit)))
                                     )
                                 ),
 
@@ -150,11 +164,12 @@ public partial class FavoritesPage : BasePage<FavoritesPageViewModel>
                                 .BackgroundColor(Colors.Green)
                                 .FontSize(12)
                                 .FontAttributes(FontAttributes.Bold)
-                                .CenterHorizontally()
+                                .CenterHorizontal()
                                 .HeightRequest(30)
                                 .WidthRequest(100)
                                 .Command(BindingContext.AddProductBasketCommand)
-                                .Bind(Button.CommandParameterProperty, ".")
+                                .CommandParameter(e => e.Path("."))
+                                //.Bind(Button.CommandParameterProperty, ".")
                             )
                         )
                     )

@@ -14,12 +14,12 @@ public partial class MyPopup : Popup
                 .CornerRadius(25)
                 .Content(
                     new VerticalStackLayout()
-                    .FillHorizontally()
-                    .FillVertically()
+                    .FillHorizontal()
+                    .FillVertical()
                     .Margin(10)
                     .Children(
                         new SKLottieView()
-                        .SKSource(new SKFileLottieImageSource { File = "completed.json" })
+                        .Source(new SKFileLottieImageSource { File = "completed.json" })
                         .RepeatCount(-1)
                         .HeightRequest(250)
                         .WidthRequest(200),

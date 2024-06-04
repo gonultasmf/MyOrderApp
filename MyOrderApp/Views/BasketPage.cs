@@ -22,14 +22,15 @@ public partial class BasketPage : BasePage<BasketPageViewModel>
                     .Margin(0,5)
                     .FontAttributes(FontAttributes.Bold)
                     .FontSize(20)
-                    .CenterHorizontally()
+                    .CenterHorizontal()
                     .Row(0),
 
                     new CollectionView()
                     .Row(1)
                     .SelectionMode(SelectionMode.None)
                     .ItemsLayout(new LinearItemsLayout(ItemsLayoutOrientation.Vertical).ItemSpacing(10))
-                    .Bind(CollectionView.ItemsSourceProperty, nameof(BindingContext.BasketProducts))
+                    .ItemsSource(e => e.Path(nameof(BindingContext.BasketProducts)))
+                    //.Bind(CollectionView.ItemsSourceProperty, nameof(BindingContext.BasketProducts))
                     .Margin(10,5)
                     .EmptyView(
                         new VerticalStackLayout()
@@ -56,17 +57,19 @@ public partial class BasketPage : BasePage<BasketPageViewModel>
                             .Padding(new Thickness(10,5))
                             .Children(
                                 new Image()
-                                .Bind(Image.SourceProperty, "Product.Image")
+                                .Source(e => e.Path("Product.Image"))
+                                //.Bind(Image.SourceProperty, "Product.Image")
                                 .SizeRequest(80,80)
                                 .Column(0)
-                                .CenterVertically(),
+                                .CenterVertical(),
 
                                 new VerticalStackLayout()
                                 .Column(1)
                                 .Spacing(10)
                                 .Children(
                                     new Label()
-                                    .Bind(Label.TextProperty, "Product.Name")
+                                    .Text(e => e.Path("Product.Name"))
+                                    //.Bind(Label.TextProperty, "Product.Name")
                                     .FontSize(11)
                                     .FontAttributes(FontAttributes.Italic)
                                     .AlignStart()
@@ -99,7 +102,8 @@ public partial class BasketPage : BasePage<BasketPageViewModel>
                                             .CommandParameter(e => e.Path(".")),
 
                                             new Label()
-                                            .Bind(Label.TextProperty, "Count")
+                                            .Text(e => e.Path("Count"))
+                                            //.Bind(Label.TextProperty, "Count")
                                             .FontAttributes(FontAttributes.Bold)
                                             .TextCenter()
                                             .FontSize(18),
@@ -140,11 +144,13 @@ public partial class BasketPage : BasePage<BasketPageViewModel>
                                     .Spacing(0)
                                     .Children(
                                         new Label()
-                                        .Bind(Label.TextProperty, "Product.Price")
+                                        .Text(e => e.Path("Product.Price"))
+                                        //.Bind(Label.TextProperty, "Product.Price")
                                         .FontSize(10),
 
                                         new Label()
-                                        .Bind(Label.TextProperty, "TotalPrice")
+                                        .Text(e => e.Path("TotalPrice"))
+                                        //.Bind(Label.TextProperty, "TotalPrice")
                                         .FontAttributes(FontAttributes.Bold)
                                         .TextCenter()
                                         .FontSize(18)
@@ -168,7 +174,8 @@ public partial class BasketPage : BasePage<BasketPageViewModel>
                         .Row(0),
 
                         new Label()
-                        .Bind(Label.TextProperty, nameof(BindingContext.TotalProductPrice))
+                        .Text(e => e.Path(nameof(BindingContext.TotalProductPrice)))
+                        //.Bind(Label.TextProperty, nameof(BindingContext.TotalProductPrice))
                         .Column(1)
                         .Row(0)
                         .AlignEnd(),
@@ -179,7 +186,8 @@ public partial class BasketPage : BasePage<BasketPageViewModel>
                         .Row(1),
 
                         new Label()
-                        .Bind(Label.TextProperty, nameof(BindingContext.TotalKdv))
+                        .Text(e => e.Path(nameof(BindingContext.TotalKdv)))
+                        //.Bind(Label.TextProperty, nameof(BindingContext.TotalKdv))
                         .Column(1)
                         .Row(1)
                         .AlignEnd(),
@@ -192,7 +200,8 @@ public partial class BasketPage : BasePage<BasketPageViewModel>
                         .Row(2),
 
                         new Label()
-                        .Bind(Label.TextProperty, nameof(BindingContext.TotalPrice))
+                        .Text(e => e.Path(nameof(BindingContext.TotalPrice)))
+                        //.Bind(Label.TextProperty, nameof(BindingContext.TotalPrice))
                         .FontAttributes(FontAttributes.Bold)
                         .FontSize(16)
                         .Column(1)
@@ -202,7 +211,7 @@ public partial class BasketPage : BasePage<BasketPageViewModel>
                         new Button()
                         .Text("SİPARİŞ ET")
                         .WidthRequest(150)
-                        .CenterHorizontally()
+                        .CenterHorizontal()
                         .ColumnSpan(2)
                         .Column(0)
                         .Row(3)
