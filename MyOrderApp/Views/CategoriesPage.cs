@@ -18,8 +18,8 @@ public partial class CategoriesPage : BasePage<CategoriesPageViewModel>
             .Children(
                 new CollectionView()
                 .SelectionMode(SelectionMode.None)
-                .ItemsSource(e => e.Path("Categories"))
-                //.Bind(CollectionView.ItemsSourceProperty, "Categories")
+                //.ItemsSource(e => e.Path("Categories"))
+                .Bind(CollectionView.ItemsSourceProperty, "Categories")
                 .ItemsLayout(
                     new LinearItemsLayout(ItemsLayoutOrientation.Vertical)
                     .ItemSpacing(10)
